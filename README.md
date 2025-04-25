@@ -1,7 +1,7 @@
 # Astro i18n
 
 
-![DemoES](assets/lang_es.png)
+![DemoES](src/assets/lang_es.png)
 
 ![DemoEN](assets/lang_en.png)
 

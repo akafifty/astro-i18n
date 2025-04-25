@@ -1,0 +1,42 @@
+---
+import "./src/styles/global.css";
+
+interface Props {
+	title: string;
+	description: string;
+}
+import { getLangFromUrl } from "../i18n/utils";
+import NavBarComponent from "@/components/NavBarComponent.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="description" content={description} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body class="min-h-screen min-w-[600px]">
+		<NavBarComponent />
+		<div
+			class="max-w-3xl mx-auto p-6 border-l border-r border-gray-100 h-screen"
+		>
+			<slot />
+		</div>
+	</body>
+</html>
+
+<style>
+	html,
+	body {
+		margin: 0;
+		width: 100%;
+		height: 100%;
+	}
+</style>

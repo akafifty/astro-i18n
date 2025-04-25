@@ -1,0 +1,83 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { languages } from "../i18n/ui";
+import { useTranslations } from "../i18n/utils";
+import { getI18N } from "@/i18n";
+
+const getPathWithoutLocale = (path: string): string => {
+  const segments = path.split("/").filter(Boolean);
+  const isFirstSegmentLang = Object.keys(languages).includes(segments[0]);
+  return isFirstSegmentLang ? `/${segments.slice(1).join("/")}` : path;
+};
+
+const currentPathWithoutLocale = getPathWithoutLocale(Astro.url.pathname);
+const currentLang = Astro.currentLocale || "es";
+const translateLabels = useTranslations(currentLang as any);
+
+const { currentLocale } = Astro;
+const i18n = getI18N({ currentLocale });
+---
+
+<div class="relative inline-block text-left">
+  <button
+    id="lang-toggle"
+    type="button"
+    class="inline-flex justify-center w-full rounded-lg border border-gray-200 shadow px-4 py-2
+     bg-white text-sm font-medium text-gray-700 hover:bg-gray-50
+     focus:outline-none focus:ring-2 focus:ring-blue-500"
+  >
+    🌐 {translateLabels(currentLang as any)}
+    <svg
+      class="ml-2 h-5 w-5 text-gray-500"
+      fill="none"
+      viewBox="0 0 20 20"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M7 7l3-3 3 3m0 6l-3 3-3-3"></path>
+    </svg>
+  </button>
+
+  <div
+    id="lang-menu"
+    class="absolute z-10 mt-2 w-full origin-top-right rounded-md bg-white
+    shadow-lg ring-1 ring-blue-200 ring-opacity-5 hidden"
+  >
+    <ul class="py-1 text-gray-700">
+      {
+        Object.entries(languages).map(([langCode, langName]) => (
+          <li>
+            <a
+              href={getRelativeLocaleUrl(
+                langCode as any,
+                currentPathWithoutLocale,
+              )}
+              class="block px-4 py-2 text-sm hover:bg-gray-100 transition-colors"
+            >
+              {translateLabels(langCode as any)}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <script type="module">
+    const toggleBtn = document.getElementById("lang-toggle");
+    const menu = document.getElementById("lang-menu");
+
+    toggleBtn?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      menu?.classList.toggle("hidden");
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!menu?.contains(e.target) && !toggleBtn?.contains(e.target)) {
+        menu?.classList.add("hidden");
+      }
+    });
+  </script>
+</div>

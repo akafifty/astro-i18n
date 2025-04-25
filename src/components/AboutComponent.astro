@@ -1,0 +1,18 @@
+---
+import "./src/styles/global.css";
+import { getI18N } from "@/i18n";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import Layout from "@/layouts/Layout.astro";
+const { currentLocale } = Astro;
+const i18n = getI18N({ currentLocale });
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title={i18n.about} description="About description">
+    <section class="space-y-4">
+        <h2 class="font-semibold text-2xl">{t("nav.about")}</h2>
+        <h2>{i18n.text}</h2>
+    </section>
+</Layout>

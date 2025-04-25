@@ -3,13 +3,13 @@
 
 ![DemoES](src/assets/lang_es.png)
 
-![DemoEN](assets/lang_en.png)
+![DemoEN](src/assets/lang_en.png)
 
-![404](assets/404_general.png)
+![404](src/assets/404_general.png)
 
-![404EN](assets/404_en.png)
+![404EN](src/assets/404_en.png)
 
-![404ES](assets/404_es.png)
+![404ES](src/assets/404_es.png)
 
 
 ## 🧞 Commands
